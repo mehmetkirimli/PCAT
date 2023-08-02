@@ -1,24 +1,14 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 require('dotenv').config();
 
-const myLogger = (req, res, next) => {
-   console.log('Middleware Log 1');
-   next();
-};
-
 app.use(express.static('public')); // middleware static dosyaların kullanımı
-app.use(myLogger);
 
 const PORT = process.env.PORT || 3001;
 
 app.get('/', (req, res) => {
-   const photo = {
-      id: 1,
-      name: 'Photo Name Kartal',
-      description: 'KARA KARTAL',
-   };
-   res.send(photo);
+   res.sendFile(path.resolve(__dirname, 'temp/index.html'));
 });
 
 app.listen(PORT, () => {
