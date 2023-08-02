@@ -1,7 +1,14 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
-app.use(express.static('public'));
+
+const myLogger = (req, res, next) => {
+   console.log('Middleware Log 1');
+   next();
+};
+
+app.use(express.static('public')); // middleware static dosyaların kullanımı
+app.use(myLogger);
 
 const PORT = process.env.PORT || 3001;
 
