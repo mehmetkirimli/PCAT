@@ -9,6 +9,8 @@ app.set('view engine', 'ejs');
 
 // MIDDLEWARE
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // ROUTES
 app.get('/', (req, res) => {
@@ -19,6 +21,10 @@ app.get('/about', (req, res) => {
 });
 app.get('/add', (req, res) => {
    res.render('add');
+});
+
+app.post('/photos', (req, res) => {
+   console.log(req.body);
 });
 
 const PORT = process.env.PORT || 3001;
