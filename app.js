@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const fileUpload = require('express-fileupload');
+const fs = require('fs');
 
 const app = express();
 require('dotenv').config();
@@ -16,6 +18,7 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true })); // bodyparser yerine express ile gelen middlevare işimize yarıyor.
 app.use(express.json());
+app.use(fileUpload());
 
 // ROUTES
 app.get('/', async (req, res) => {
@@ -42,9 +45,21 @@ app.get('/add', (req, res) => {
 });
 
 app.post('/photos', async (req, res) => {
-   await Photo.create(req.body);
-   res.redirect('/'); //  Bu metot, HTTP isteğini belirtilen hedef URL'ye yönlendirir.
-   //  Genellikle kullanıcı bir sayfada işlem tamamladığında veya belirli bir URL'ye erişim izni olmadığında bu yönlendirmeyi kullanabilirsiniz.
+   const uploadDir = 'public/uploads';
+   if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir);
+   }
+
+   let uploadedImage = req.files.image;
+   let uploadPath = __dirname + '/public/uploads/' + uploadedImage;
+
+   uploadedImage.mv(uploadPath, async () => {
+      await Photo.create({
+         ...req.body,
+         image: '/uploads/' + uploadedImage.name,
+      });
+      res.redirect('/');
+   });
 });
 
 const PORT = process.env.PORT || 3001;
