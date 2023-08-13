@@ -53,13 +53,14 @@ app.post('/photos', async (req, res) => {
    let uploadedImage = req.files.image;
    let uploadPath = __dirname + '/public/uploads/' + uploadedImage;
 
-   uploadedImage.mv(uploadPath, async () => {
+   uploadedImage.mv(uploadPath, async (err) => {
+      if (err) console.log(err); // Bu kısımda önemli olan add.ejs'nin içerisine form elemanı olarak encType="multipart/form-data" atribute eklemek
       await Photo.create({
          ...req.body,
          image: '/uploads/' + uploadedImage.name,
       });
-      res.redirect('/');
    });
+   res.redirect('/');
 });
 
 const PORT = process.env.PORT || 3001;
