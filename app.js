@@ -51,7 +51,12 @@ app.post('/photos', async (req, res) => {
    }
 
    let uploadedImage = req.files.image;
-   let uploadPath = __dirname + '/public/uploads/' + uploadedImage;
+   // let uploadPath = __dirname + '/public/uploads/' + uploadedImage;
+   let uploadPath = path.join(
+      __dirname,
+      '/public/uploads/',
+      uploadedImage.name
+   );
 
    uploadedImage.mv(uploadPath, async (err) => {
       if (err) console.log(err); // Bu kısımda önemli olan add.ejs'nin içerisine form elemanı olarak encType="multipart/form-data" atribute eklemek
