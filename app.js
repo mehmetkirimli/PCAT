@@ -2,13 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
 const methodOverride = require('method-override');
-const fs = require('fs');
-
+const photoController = require('./controllers/photoController');
+const pageController = require('./controllers/pageController');
 const app = express();
 require('dotenv').config();
-const path = require('path');
-const ejs = require('ejs');
-const Photo = require('./models/Photo');
 // CONNECT DB
 mongoose.connect('mongodb://localhost:27017/Pcat-Db');
 
@@ -23,77 +20,18 @@ app.use(fileUpload());
 app.use(methodOverride('_method', { methods: ['POST', 'GET'] }));
 
 // ROUTES
-app.get('/', async (req, res) => {
-   const photos = await Photo.find({});
-   res.render('index', {
-      photos,
-   });
-});
 
-app.get('/photos/:id', async (req, res) => {
-   // res.render('about');
-   // console.log(req.params.id);
-   const photo = await Photo.findById(req.params.id);
-   res.render('photo', {
-      photo,
-   });
-});
+// PhotoController
+app.get('/', photoController.getAllPhotos);
+app.get('/photos/:id', photoController.getPhoto);
+app.post('/photos', photoController.createPhoto);
+app.put('/photos/:id', photoController.updatePhoto);
+app.delete('/photos/:id', photoController.deletePhoto);
+app.get('/photos/edit/:id', photoController.getEditPage);
 
-app.get('/about', (req, res) => {
-   res.render('about');
-});
-app.get('/add', (req, res) => {
-   res.render('add');
-});
-
-app.get('/photos/edit/:id', async (req, res) => {
-   const photo = await Photo.findOne({ _id: req.params.id });
-   res.render('edit', {
-      photo,
-   });
-});
-
-app.put('/photos/:id', async (req, res) => {
-   const photo = await Photo.findOne({ _id: req.params.id });
-   photo.title = req.body.title;
-   photo.description = req.body.description;
-   photo.save();
-
-   res.redirect(`/photos/${req.params.id}`);
-});
-
-app.delete('/photos/:id', async (req, res) => {
-   const photo = await Photo.findOne({ _id: req.params.id });
-   let deletedImage = __dirname + '/public' + photo.image;
-   fs.unlinkSync(deletedImage);
-   await Photo.deleteOne(photo._id);
-
-   res.redirect('/');
-});
-
-app.post('/photos', async (req, res) => {
-   const uploadDir = 'public/uploads';
-   if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir);
-   }
-
-   let uploadedImage = req.files.image;
-   // let uploadPath = __dirname + '/public/uploads/' + uploadedImage;
-   let uploadPath = path.join(
-      __dirname,
-      '/public/uploads/',
-      uploadedImage.name
-   );
-
-   uploadedImage.mv(uploadPath, async (err) => {
-      if (err) console.log(err); // Bu kısımda önemli olan add.ejs'nin içerisine form elemanı olarak encType="multipart/form-data" atribute eklemek
-      await Photo.create({
-         ...req.body,
-         image: '/uploads/' + uploadedImage.name,
-      });
-   });
-   res.redirect('/');
-});
+// PageController
+app.get('/about', pageController.getAboutPage);
+app.get('/add', pageController.getAddPage);
 
 const PORT = process.env.PORT || 3001;
 
