@@ -20,7 +20,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true })); // bodyparser yerine express ile gelen middlevare işimize yarıyor.
 app.use(express.json());
 app.use(fileUpload());
-app.use(methodOverride('_method'));
+app.use(methodOverride('_method', { methods: ['POST', 'GET'] }));
 
 // ROUTES
 app.get('/', async (req, res) => {
@@ -62,10 +62,11 @@ app.put('/photos/:id', async (req, res) => {
    res.redirect(`/photos/${req.params.id}`);
 });
 
-app.delete('/photos/delete/:id', async (req, res) => {
+app.delete('/photos/:id', async (req, res) => {
    const photo = await Photo.findOne({ _id: req.params.id });
-   Photo.deleteOne(photo);
-   console.log('Silindi');
+   let deletedImage = __dirname + '/public' + photo.image;
+   fs.unlinkSync(deletedImage);
+   await Photo.deleteOne(photo._id);
 
    res.redirect('/');
 });
