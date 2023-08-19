@@ -37,20 +37,20 @@ const Photo = mongoose.model('Photo', PhotoSchema);
 //Update Photo
 // const id = '64cc0a682aec20eab5b1a834';
 // async function updateAndRead() {
-//    try {
-//       const updatePhoto = await Photo.findByIdAndUpdate(
-//          id,
-//          {
-//             title: 'Photo 1123 Updated',
-//             description: 'Photo 1 UPdate olacak',
-//          },
-//          {
-//             new: true,
-//          }
-//       );
-//       console.log(updatePhoto);
-//    } catch (error) {
-//       console.log(error);
-//    }
+// try {
+//    const updatePhoto = await Photo.findByIdAndUpdate(
+//       id,
+//       {
+//          title: 'Photo 1123 Updated',
+//          description: 'Photo 1 UPdate olacak',
+//       },
+//       {
+//          new: true,
+//       }
+//    );
+//    console.log(updatePhoto);
+// } catch (error) {
+//    console.log(error);
+// }
 // }
 // updateAndRead();

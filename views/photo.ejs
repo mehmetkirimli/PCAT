@@ -47,12 +47,14 @@
                                 <!-- Share box -->
                                 <div class="tm-bg-gray tm-share-box">
                                     <div class="text-center">
-                                        <button
-                                            class="btn btn-primary p-0 mb-4 tm-btn-animate tm-btn-download tm-icon-download"><span>Update
-                                                Details</span></button>
+                                        <button onclick="updateDetails('<%=photo._id  %>')"
+                                            class="btn btn-primary p-0 mb-4 tm-btn-animate tm-btn-download tm-icon-download">
+                                            <span>Update Details</span>
+                                        </button>
+
                                     </div>
                                     <div class="text-center">
-                                        <button
+                                        <button onclick="deletePhoto('<%=photo._id  %>')"
                                             class="btn btn-danger p-0 tm-btn-animate tm-btn-download tm-icon-download"><span>Delete
                                                 Photo</span></button>
                                     </div>
@@ -68,3 +70,15 @@
     </body>
 
     </html>
+
+
+    <script>
+        function updateDetails(photoId) {
+            window.location.href = "/photos/edit/" + photoId;
+        }
+
+        function deletePhoto(photoId) {
+            window.location.href = "/photos/delete/" + photoId;
+        }
+
+    </script>
