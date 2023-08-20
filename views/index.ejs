@@ -83,7 +83,7 @@
                             <% if(pages>0){ %>
                                 <ul class="nav tm-paging-links">
                                     <% for(let sayfa=1 ; sayfa<=pages ; sayfa++){ %>
-                                        <% if(sayfa===current){ %>
+                                        <% if(sayfa==current){ %>
                                             <li class="nav-item active"><a href="/?page= <%=sayfa  %>"
                                                     class="nav-link tm-paging-link">
                                                     <%= sayfa %>

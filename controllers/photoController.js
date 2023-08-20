@@ -7,7 +7,7 @@ exports.getAllPhotos = async (req, res) => {
    const totalPhotos = await Photo.find().countDocuments();
 
    const photos = await Photo.find({})
-      .sort('-dataCreated')
+      .sort('createdAt')
       .skip((page - 1) * photosPerPage)
       .limit(photosPerPage);
 
