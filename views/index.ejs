@@ -80,13 +80,32 @@
 
                         <!-- Catalog Paging Buttons -->
                         <div>
-                            <ul class="nav tm-paging-links">
-                                <li class="nav-item active"><a href="#" class="nav-link tm-paging-link">1</a></li>
-                                <li class="nav-item"><a href="#" class="nav-link tm-paging-link">2</a></li>
-                                <li class="nav-item"><a href="#" class="nav-link tm-paging-link">3</a></li>
-                                <li class="nav-item"><a href="#" class="nav-link tm-paging-link">4</a></li>
-                                <li class="nav-item"><a href="#" class="nav-link tm-paging-link">></a></li>
-                            </ul>
+                            <% if(pages>0){ %>
+                                <ul class="nav tm-paging-links">
+                                    <% for(let sayfa=1 ; sayfa<=pages ; sayfa++){ %>
+                                        <% if(sayfa===current){ %>
+                                            <li class="nav-item active"><a href="/?page= <%=sayfa  %>"
+                                                    class="nav-link tm-paging-link">
+                                                    <%= sayfa %>
+                                                </a></li>
+
+                                            <% } else if (sayfa<pages){ %>
+                                                <li class="nav-item"><a href="/?page= <%=sayfa  %>"
+                                                        class="nav-link tm-paging-link">
+                                                        <%= sayfa %>
+                                                    </a></li>
+                                                <% } else { %>
+                                                    <li class="nav-item"><a href="/?page= <%=sayfa  %>"
+                                                            class="nav-link tm-paging-link">
+                                                            ></a></li>
+                                                    <% } %>
+
+
+                                                        <% } %>
+
+
+                                </ul>
+                                <% } %>
                         </div>
                     </main>
 
