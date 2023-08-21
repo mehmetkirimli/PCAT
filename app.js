@@ -7,7 +7,16 @@ const pageController = require('./controllers/pageController');
 const app = express();
 require('dotenv').config();
 // CONNECT DB
-mongoose.connect('mongodb://localhost:27017/Pcat-Db');
+mongoose
+   .connect(
+      `mongodb+srv://kirimlimehmet:${process.env.PASSWORD}@cluster0.08qcvbe.mongodb.net/PCAT-DB?retryWrites=true&w=majority`
+   )
+   .then(() => {
+      console.log('DB Connected .');
+   })
+   .catch((err) => {
+      console.log(err);
+   });
 
 //TEMPLATE ENGINE
 app.set('view engine', 'ejs');
@@ -33,8 +42,8 @@ app.get('/photos/edit/:id', photoController.getEditPage);
 app.get('/about', pageController.getAboutPage);
 app.get('/add', pageController.getAddPage);
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-   console.log(`Sunucu ${PORT} portunda başlatıldı.`);
+   console.log(` Server running on port : ${PORT} \n DB is connecting ...`);
 });
