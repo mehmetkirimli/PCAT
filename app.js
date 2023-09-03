@@ -9,7 +9,7 @@ require('dotenv').config();
 // CONNECT DB
 mongoose
    .connect(
-      `mongodb+srv://kirimlimehmet:${process.env.PASSWORD}@cluster0.08qcvbe.mongodb.net/PCAT-DB?retryWrites=true&w=majority`
+      `mongodb+srv://kirimlimehmet:8EeJVQ7CJ7PHLzbZ@cluster0.08qcvbe.mongodb.net/PCAT-DB?retryWrites=true&w=majority`
    )
    .then(() => {
       console.log('DB Connected .');
