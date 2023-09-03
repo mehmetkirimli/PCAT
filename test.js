@@ -1,19 +1,19 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+// const mongoose = require('mongoose');
+// const Schema = mongoose.Schema;
 
-// Connect DB
-mongoose.connect('mongodb://localhost:27017/pcat-test-db');
+// // Connect DB
+// mongoose.connect('mongodb://localhost:27017/pcat-test-db');
 
-//Creat Schema
-const PhotoSchema = new Schema(
-   {
-      title: String,
-      description: String,
-   },
-   { timestamps: true }
-);
+// //Creat Schema
+// const PhotoSchema = new Schema(
+//    {
+//       title: String,
+//       description: String,
+//    },
+//    { timestamps: true }
+// );
 
-const Photo = mongoose.model('Photo', PhotoSchema);
+// const Photo = mongoose.model('Photo', PhotoSchema);
 
 // Create a photo
 
